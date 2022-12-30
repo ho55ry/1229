@@ -6,6 +6,10 @@
 #
 # 계산기 시작시 디폴트값은 0으로 원하는 숫자 입력 or 디폴트값에 바로 연산가능
 # 입력창에 +1 , -1 , *10 , /10 등 바로 입력
+# 잘못 입력 시 오류메시지 출력후 결과 값은 직전 값 유지
+# 결과값이 정수로 바꿀수있는 실수라면 정수로 출력 ex) 5 + 5.0 = 10
+# 나누기 0 하는 경우 무한대이므로 오류메시지 출력후 결과값 0으로 초기화
+# 계산기 히스토리는 계산기 켤때마다 리셋됨
 #
 # ------------------------------------------------------------------------------------------------
 
@@ -14,12 +18,11 @@ class Calc:
         self.result=result
         print(f'--- [ 계 산 기 ] ---')
         FILE_NAME='.myCalc.txt'
-        fp=open(FILE_NAME, mode='w',encoding='utf-8') #히스토리 리셋 계속 추가하고 싶으면 mode='a'
+        fp=open(FILE_NAME, mode='w',encoding='utf-8') #히스토리 리셋. 계속 추가하고 싶으면 mode='a'
         fp.close()
 
     def put(self,입력=0):
         print(f'결과 : {입력}')
-
 
         while True:
             FILE_NAME='.myCalc.txt'
@@ -90,5 +93,13 @@ class Calc:
         if self.result==int(self.result): return int(self.result)
         else: return self.result
 
+    def hist(self):
+        FILE_NAME='.myCalc.txt'
+        fp=open(FILE_NAME, mode='r',encoding='utf-8')
+        allData=fp.read()
+        fp.close()
+        print(f'\n-- [계산 히스토리] --\n{allData}')
+
 ex=Calc()
 ex.put()
+ex.hist()
